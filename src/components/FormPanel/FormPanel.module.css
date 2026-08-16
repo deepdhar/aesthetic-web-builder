@@ -1,0 +1,35 @@
+.panel { display: flex; flex-direction: column; padding: 28px 28px 24px; overflow-y: auto; border-right: 1px solid var(--border); background: var(--bg-2); scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.step { padding: 22px 0; border-bottom: 1px solid var(--border); }
+.step:last-of-type { border-bottom: none; }
+.stepLabel { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.stepNum { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; background: var(--accent-glow); border: 1px solid rgba(232,184,109,0.2); padding: 2px 7px; border-radius: 4px; line-height: 1.4; }
+.stepTitle { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.2px; }
+.inputWrap { position: relative; }
+.textInput { width: 100%; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text); font-family: var(--font-sans); font-size: 14px; padding: 11px 14px; outline: none; transition: border-color var(--transition), box-shadow var(--transition); }
+.textInput::placeholder { color: var(--text-dim); }
+.textInput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.charCount { position: absolute; right: 12px; bottom: -18px; font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.urlRow { display: flex; align-items: center; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; transition: border-color var(--transition), box-shadow var(--transition); }
+.urlRow:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.urlOk { border-color: var(--success) !important; box-shadow: 0 0 0 3px rgba(74,222,128,0.12) !important; }
+.urlErr { border-color: var(--error) !important; box-shadow: 0 0 0 3px rgba(248,113,113,0.12) !important; }
+.urlIcon { display: flex; align-items: center; padding: 0 12px; color: var(--text-muted); flex-shrink: 0; }
+.urlInput { border: none; border-radius: 0; padding-left: 0; background: transparent; flex: 1; }
+.urlInput:focus { box-shadow: none; border-color: transparent; }
+.statusMsg { margin-top: 8px; font-size: 12px; }
+.statusOk  { color: var(--success); }
+.statusErr { color: var(--error); }
+.stepHint { margin-top: 12px; font-size: 12px; color: var(--text-muted); }
+.hintLink { color: var(--accent); text-decoration: none; transition: opacity var(--transition); }
+.hintLink:hover { opacity: 0.7; }
+.actionRow { padding-top: 24px; display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.downloadBtn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 16px 24px; border: none; border-radius: var(--radius-lg); background: linear-gradient(135deg, #e8b86d 0%, #d4904a 100%); color: #1a0f00; font-family: var(--font-sans); cursor: pointer; transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition); box-shadow: 0 4px 20px rgba(232,184,109,0.3); position: relative; overflow: hidden; }
+.downloadBtn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%); pointer-events: none; }
+.downloadBtn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,184,109,0.45); }
+.downloadBtn:not(:disabled):active { transform: translateY(0); }
+.downloadBtn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+.loading .btnLabel::after { content: ''; display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; margin-left: 8px; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btnLabel { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+.btnSub { font-size: 11.5px; font-weight: 400; opacity: 0.65; }
+.actionHint { font-size: 12px; color: var(--text-dim); text-align: center; min-height: 18px; }
