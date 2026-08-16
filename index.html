@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aesthetic Web Builder</title>
+  <meta name="description" content="Build your own nostalgic ambient music web app in minutes. No code required." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">Aesthetic<span class="logo-accent">Builder</span></span>
+    </div>
+    <p class="header-tagline">Build a nostalgic ambient music site — no code needed.</p>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout">
+
+    <!-- LEFT: FORM PANEL -->
+    <section class="form-panel" aria-label="Builder form">
+
+      <!-- STEP 1: Site Name -->
+      <div class="form-step" id="step-name">
+        <div class="step-label">
+          <span class="step-num">01</span>
+          <span class="step-title">Name your site</span>
+        </div>
+        <div class="input-wrap">
+          <input
+            type="text"
+            id="site-name"
+            class="text-input"
+            placeholder="e.g. Deluxe Saloon, Lo-fi Corner…"
+            maxlength="40"
+            autocomplete="off"
+          />
+          <span class="char-count" id="name-count">0 / 40</span>
+        </div>
+      </div>
+
+      <!-- STEP 2: YouTube Playlist -->
+      <div class="form-step" id="step-playlist">
+        <div class="step-label">
+          <span class="step-num">02</span>
+          <span class="step-title">Paste a YouTube playlist link</span>
+        </div>
+        <div class="input-wrap">
+          <div class="url-input-row">
+            <span class="url-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
+            </span>
+            <input
+              type="url"
+              id="playlist-url"
+              class="text-input url-input"
+              placeholder="https://www.youtube.com/playlist?list=…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="playlist-status" id="playlist-status" aria-live="polite"></div>
+        </div>
+        <p class="step-hint">Works with any public YouTube playlist. <a href="https://www.youtube.com/results?search_query=ambient+music+playlist" target="_blank" rel="noopener" class="hint-link">Find one ↗</a></p>
+      </div>
+
+      <!-- STEP 3: Background Image -->
+      <div class="form-step" id="step-bg">
+        <div class="step-label">
+          <span class="step-num">03</span>
+          <span class="step-title">Choose a background</span>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-row" role="tablist" aria-label="Background source">
+          <button class="tab-btn active" id="tab-library" role="tab" aria-selected="true" aria-controls="panel-library" onclick="switchTab('library')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            Library
+          </button>
+          <button class="tab-btn" id="tab-upload" role="tab" aria-selected="false" aria-controls="panel-upload" onclick="switchTab('upload')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload
+          </button>
+        </div>
+
+        <!-- Library Panel -->
+        <div id="panel-library" role="tabpanel" aria-labelledby="tab-library" class="tab-panel active">
+          <div class="image-library" id="image-library">
+            <div class="library-empty" id="library-empty">
+              <div class="empty-icon">🖼</div>
+              <p>Library images will appear here.</p>
+              <p class="empty-sub">Drop images into <code>assets/images/</code> to populate.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Panel -->
+        <div id="panel-upload" role="tabpanel" aria-labelledby="tab-upload" class="tab-panel hidden">
+          <label class="upload-zone" id="upload-zone" for="file-input">
+            <div class="upload-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <p class="upload-primary">Drop an image here</p>
+            <p class="upload-secondary">or <span class="upload-link">browse files</span></p>
+            <p class="upload-hint">JPG, PNG, WebP — max 10 MB</p>
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <div class="upload-preview hidden" id="upload-preview">
+            <img id="upload-preview-img" src="" alt="Selected background preview" />
+            <button class="remove-upload-btn" id="remove-upload" aria-label="Remove uploaded image">✕ Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATE BUTTON -->
+      <div class="action-row">
+        <button class="generate-btn" id="generate-btn" disabled aria-label="Generate and download your web app">
+          <span class="btn-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </span>
+          <span class="btn-label">Download ZIP</span>
+          <span class="btn-sub">Your app, ready to run locally</span>
+        </button>
+        <p class="action-hint" id="action-hint">Fill in all three fields to unlock download.</p>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: LIVE PREVIEW PANEL -->
+    <section class="preview-panel" aria-label="Live preview">
+      <div class="preview-header">
+        <div class="preview-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="preview-label">Live Preview</span>
+        <button class="fullscreen-btn" id="fullscreen-btn" title="Open full preview" aria-label="Open full screen preview" onclick="openFullPreview()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          Full Preview
+        </button>
+      </div>
+      <div class="preview-screen" id="preview-screen">
+        <div class="preview-placeholder" id="preview-placeholder">
+          <div class="placeholder-icon">✦</div>
+          <p class="placeholder-text">Your site will appear here<br/>as you fill in the form.</p>
+        </div>
+        <div class="preview-app hidden" id="preview-app">
+          <div class="pa-bg" id="pa-bg"></div>
+          <div class="pa-overlay"></div>
+
+          <!-- Live badge: TOP CENTER -->
+          <div class="pa-live-badge" id="pa-live-badge">
+            <span class="pa-live-dot"></span>
+            <span class="pa-live-text" id="pa-listener-count">12 online</span>
+          </div>
+
+          <!-- Hidden YouTube IFrame for live preview -->
+          <div id="preview-yt-container" aria-hidden="true"></div>
+
+          <div class="pa-title-wrap">
+            <div class="pa-title" id="pa-title">Your Site</div>
+          </div>
+          <div class="pa-player">
+            <div class="pa-vinyl">
+              <div class="pa-vinyl-inner" id="pa-vinyl-inner">
+                <img id="pa-vinyl-img" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%" />
+                <svg id="pa-vinyl-placeholder" width="24" height="24" viewBox="0 0 24 24" fill="white" opacity="0.5" aria-hidden="true"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
+              </div>
+              <div class="pa-vinyl-hole"></div>
+            </div>
+            <div class="pa-info">
+              <div class="pa-song-title" id="pa-song-title">Playlist Ready</div>
+              <div class="pa-song-artist" id="pa-song-artist">Hit play to start</div>
+              <div class="pa-seek-bar">
+                <div class="pa-seek-fill" id="pa-seek-fill" style="width:0%"></div>
+              </div>
+              <div class="pa-time"><span id="pa-time-cur">0:00</span> / <span id="pa-time-tot">0:00</span></div>
+            </div>
+            <div class="pa-controls">
+              <button class="pa-ctrl" id="pa-btn-prev" aria-label="Previous track">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+              </button>
+              <button class="pa-ctrl pa-play" id="pa-btn-play" aria-label="Play" aria-pressed="false">
+                <svg id="pa-icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pa-icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <button class="pa-ctrl" id="pa-btn-next" aria-label="Next track">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="preview-note">Preview loads your playlist live. Full preview opens the generated app.</p>
+    </section>
+
+  </main>
+
+  <!-- Fullscreen Preview Modal -->
+  <div id="fullscreen-modal" class="fullscreen-modal hidden" role="dialog" aria-modal="true" aria-label="Full screen preview">
+    <button class="modal-close" id="modal-close" aria-label="Close full preview" onclick="closeFullPreview()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Close
+    </button>
+    <iframe id="fullscreen-iframe" title="Full preview" allow="autoplay" allowfullscreen></iframe>
+  </div>
+
+  <!-- YouTube IFrame API (for live preview player) -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- JSZip via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHveXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="builder.js"></script>
+</body>
+</html>
