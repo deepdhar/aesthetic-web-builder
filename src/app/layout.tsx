@@ -16,10 +16,10 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Aesthetic Web Builder',
+  title: 'Nostalgic Site Builder',
   description: 'Build your own nostalgic ambient music site — no code needed.',
   openGraph: {
-    title: 'Aesthetic Web Builder',
+    title: 'Nostalgic Site Builder',
     description: 'Build your own nostalgic ambient music site — no code needed.',
     type: 'website',
   },
