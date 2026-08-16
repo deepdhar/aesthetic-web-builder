@@ -5,6 +5,7 @@ import FormPanel from '@/components/FormPanel/FormPanel';
 import PreviewPanel from '@/components/PreviewPanel/PreviewPanel';
 import FullscreenModal from '@/components/FullscreenModal/FullscreenModal';
 import styles from './page.module.css';
+import { Sparkles } from 'lucide-react';
 
 export type BgMode = 'library' | 'upload';
 
@@ -45,9 +46,9 @@ export default function BuilderPage() {
     <>
       <header className={styles.header}>
         <div className={styles.headerLogo}>
-          <span className={styles.logoIcon} aria-hidden="true">✦</span>
+          <Sparkles />
           <span className={styles.logoText}>
-            Aesthetic<span className={styles.logoAccent}>Builder</span>
+            Aesthetic <span className={styles.logoAccent}>Webpage Builder</span>
           </span>
         </div>
         <p className={styles.headerTagline}>

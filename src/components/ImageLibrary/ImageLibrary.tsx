@@ -4,8 +4,8 @@ import { useRef } from 'react';
 import type { BgData } from '@/app/page';
 import styles from './ImageLibrary.module.css';
 
-// Add filenames here as you drop images into public/images/
-const LIBRARY_IMAGES: string[] = [];
+// Pre-made library images in public/images/
+const LIBRARY_IMAGES: string[] = ['salon.png', 'durga_puja.png', 'nostalgic_childhood.png', 'truck.png', 'spidey.jpeg'];
 
 interface Props {
   bg: BgData;
