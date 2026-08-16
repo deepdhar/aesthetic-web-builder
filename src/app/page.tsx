@@ -48,7 +48,7 @@ export default function BuilderPage() {
         <div className={styles.headerLogo}>
           <Sparkles />
           <span className={styles.logoText}>
-            Aesthetic <span className={styles.logoAccent}>Webpage Builder</span>
+            Nostalgic <span className={styles.logoAccent}>Site Builder</span>
           </span>
         </div>
         <p className={styles.headerTagline}>
