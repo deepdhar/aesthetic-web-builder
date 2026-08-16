@@ -14,7 +14,7 @@
 
 <br /><br />
 
-<img src="public/images/salon.png" alt="Nostalgic Ambient Player Preview" width="850" style="border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" />
+<img src="https://github.com/user-attachments/assets/b5206b09-ba53-459a-90ea-9485b979baaa" alt="Nostalgic Ambient Player Preview" width="850" style="border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" />
 
 </div>
 
