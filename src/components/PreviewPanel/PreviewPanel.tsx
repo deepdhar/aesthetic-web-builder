@@ -151,7 +151,7 @@ export default function PreviewPanel({ state, onOpenFullPreview }: Props) {
         )}
       </div>
 
-      <p className={styles.note}>Preview loads your playlist live. Full preview opens the generated app.</p>
+      <p className={styles.note}>Preview loads your playlist live. Full preview opens the generated app.  © Deep Dhar</p>
     </section>
   );
 }
