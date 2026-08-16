@@ -2,7 +2,7 @@
 
 import type { BuilderState } from '@/app/page';
 import { usePreviewPlayer } from '@/hooks/usePreviewPlayer';
-import { useFakeListeners }  from '@/hooks/useFakeListeners';
+import { useClock } from '@/hooks/useClock';
 import styles from './PreviewPanel.module.css';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 export default function PreviewPanel({ state, onOpenFullPreview }: Props) {
   const { siteName, playlistId, bg } = state;
-  const listenerCount = useFakeListeners();
+  const clock = useClock();
 
   const {
     ready, playing, track, seekPct, currentTime, totalTime,
@@ -69,11 +69,8 @@ export default function PreviewPanel({ state, onOpenFullPreview }: Props) {
             {/* Hidden YT container */}
             <div ref={containerRef} className={styles.ytContainer} aria-hidden="true" />
 
-            {/* Live badge — top center */}
-            <div className={styles.liveBadge} aria-live="polite">
-              <span className={styles.liveDot} aria-hidden="true" />
-              <span>{listenerCount} online</span>
-            </div>
+            {/* Live Clock — top left */}
+            {clock && <div className={styles.clock}>{clock}</div>}
 
             {/* Site title */}
             <div className={styles.titleWrap}>

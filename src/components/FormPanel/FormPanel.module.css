@@ -8,6 +8,11 @@
 .textInput { width: 100%; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text); font-family: var(--font-sans); font-size: 14px; padding: 11px 14px; outline: none; transition: border-color var(--transition), box-shadow var(--transition); }
 .textInput::placeholder { color: var(--text-dim); }
 .textInput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.textArea { width: 100%; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text); font-family: var(--font-sans); font-size: 14px; padding: 11px 14px; outline: none; resize: none; min-height: 62px; line-height: 1.35; transition: border-color var(--transition), box-shadow var(--transition); }
+.textArea::placeholder { color: var(--text-dim); }
+.textArea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.inputHint { margin-top: 6px; font-size: 11.5px; color: var(--text-dim); }
+.inputHint strong { color: var(--accent); font-weight: 600; }
 .charCount { position: absolute; right: 12px; bottom: -18px; font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
 .urlRow { display: flex; align-items: center; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; transition: border-color var(--transition), box-shadow var(--transition); }
 .urlRow:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }

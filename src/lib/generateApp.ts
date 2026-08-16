@@ -44,8 +44,8 @@ export function generateApp({
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escHtml(siteName)}</title>
-  <meta name="description" content="${escHtml(siteName)} — an ambient music experience." />
+  <title>${escHtml(siteName.replace(/\n+/g, ' ').trim())}</title>
+  <meta name="description" content="${escHtml(siteName.replace(/\n+/g, ' ').trim())} — an ambient music experience." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -53,16 +53,13 @@ export function generateApp({
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--success:#4ade80;--font-serif:'Playfair Display',Georgia,serif;--font-sans:'Inter',system-ui,sans-serif}
     html,body{height:100%;overflow:hidden;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
-    body{display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:100vh;padding:20px 16px 16px;position:relative}
-    .bg{position:fixed;inset:0;background:${bgValue} center/cover no-repeat;z-index:-1;background-color:#1a0a0a}
-    .bg-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15) 0%,transparent 40%,rgba(0,0,0,.45) 100%);z-index:-1;pointer-events:none}
-    .live-badge{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:white;background:rgba(0,0,0,.25);padding:5px 14px;border-radius:20px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);white-space:nowrap}
-    .live-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 8px rgba(74,222,128,.9);position:relative}
-    .live-dot::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--success);opacity:.75;animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite}
-    @keyframes ping{75%,100%{transform:scale(2.2);opacity:0}}
-    .site-title{flex:1;display:flex;align-items:center;justify-content:center;width:100%}
-    .site-title h1{font-family:var(--font-serif);font-size:clamp(36px,8vw,80px);font-weight:700;color:white;text-align:center;text-shadow:0 4px 24px rgba(0,0,0,.5);letter-spacing:-1px;line-height:1.1;max-width:85vw;word-break:break-word}
-    .player-wrap{width:100%;display:flex;justify-content:center;padding-bottom:4px}
+    body{display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:100vh;padding:24px 16px 20px;position:relative}
+    .bg{position:fixed;inset:0;background:${bgValue} center/cover no-repeat;z-index:0;background-color:#1a0a0a}
+    .bg-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15) 0%,transparent 40%,rgba(0,0,0,.45) 100%);z-index:1;pointer-events:none}
+    .clock{position:fixed;top:20px;left:24px;z-index:20;font-size:14px;font-weight:500;color:white;text-shadow:0 1px 6px rgba(0,0,0,.6);font-variant-numeric:tabular-nums;letter-spacing:.02em;opacity:.95;user-select:none}
+    .site-title{position:relative;z-index:10;flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding:0 16px}
+    .site-title h1{font-family:var(--font-serif);font-size:clamp(52px,11vw,110px);font-weight:800;color:white;text-align:center;text-shadow:0 6px 36px rgba(0,0,0,.85),0 2px 8px rgba(0,0,0,.65);letter-spacing:-1.5px;line-height:1.02;max-width:90vw;word-break:break-word;white-space:pre-line}
+    .player-wrap{position:relative;z-index:10;width:100%;display:flex;justify-content:center;padding-bottom:4px}
     .player{width:100%;max-width:520px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.1);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,.2);border-radius:60px;padding:12px 20px 12px 12px;box-shadow:0 8px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.25)}
     .vinyl{position:relative;width:70px;height:70px;flex-shrink:0}
     .vinyl-disc{width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.6)}
@@ -92,11 +89,7 @@ export function generateApp({
   <div class="bg" aria-hidden="true"></div>
   <div class="bg-overlay" aria-hidden="true"></div>
   <div id="yt-player" aria-hidden="true"></div>
-  <div class="live-badge" aria-live="polite">
-    <span class="live-dot" aria-hidden="true"></span>
-    <span id="listener-count">1</span>
-    <span style="opacity:.7">online</span>
-  </div>
+  <div class="clock" id="clock-display"></div>
   <div class="site-title"><h1>${escHtml(siteName)}</h1></div>
   <div class="player-wrap">
     <div class="player" role="region" aria-label="Music player">
@@ -131,9 +124,8 @@ export function generateApp({
     'use strict';
     const PL='${escJs(playlistId)}';
     let player,ready=false,playing=false,ticker=null;
-    const lel=document.getElementById('listener-count');
-    let fc=Math.floor(Math.random()*40)+5; lel.textContent=fc;
-    setInterval(()=>{fc+=Math.random()>.5?1:-1;fc=Math.max(1,Math.min(fc,120));lel.textContent=fc;},5000);
+    function updateClock(){const el=document.getElementById('clock-display');if(el)el.textContent=new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();}
+    updateClock();setInterval(updateClock,1000);
     const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
     function onYouTubeIframeAPIReady(){
       player=new YT.Player('yt-player',{height:'1',width:'1',playerVars:{listType:'playlist',list:PL,autoplay:0,controls:0,rel:0,shuffle:1},events:{onReady:r,onStateChange:s,onError:e}});

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { Download } from 'lucide-react';
 import type { BuilderState, BgData } from '@/app/page';
 import { extractPlaylistId } from '@/lib/extractPlaylistId';
-import { generateApp }       from '@/lib/generateApp';
 import { buildZip, triggerDownload } from '@/lib/buildZip';
 import ImageLibrary from '@/components/ImageLibrary/ImageLibrary';
 import styles from './FormPanel.module.css';
@@ -75,11 +75,10 @@ export default function FormPanel({ state, setSiteName, setPlaylistId, setBg }: 
         bgBlob     = await resp.blob();
       }
 
-      const html    = generateApp({ siteName, playlistId, bgFile: bgFilename });
-      const zipBlob = await buildZip({ siteName, appHtml: html, bgBlob, bgFilename });
+      const zipBlob = await buildZip({ siteName, playlistId, bgBlob, bgFilename });
       const safe    = siteName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'my-site';
       triggerDownload(zipBlob, `${safe}-app.zip`);
-      setHintMsg('✓ Downloaded! Open index.html to run your app.');
+      setHintMsg('✓ Next.js project downloaded! Unzip, run npm install & npm run dev.');
     } catch (err) {
       console.error(err);
       setHintMsg('✕ Something went wrong — please try again.');
@@ -98,18 +97,19 @@ export default function FormPanel({ state, setSiteName, setPlaylistId, setBg }: 
           <span className={styles.stepTitle}>Name your site</span>
         </div>
         <div className={styles.inputWrap}>
-          <input
+          <textarea
             id="site-name"
-            type="text"
-            className={styles.textInput}
-            placeholder="e.g. Deluxe Saloon, Lo-fi Corner…"
-            maxLength={40}
+            rows={2}
+            className={styles.textArea}
+            placeholder={"e.g. डीलक्स सैलून or Deluxe Saloon"}
+            maxLength={80}
             autoComplete="off"
             value={siteName}
-            onChange={e => setSiteName(e.target.value.trim())}
+            onChange={e => setSiteName(e.target.value)}
           />
-          <span className={styles.charCount}>{siteName.length} / 40</span>
+          <span className={styles.charCount}>{siteName.length} / 80</span>
         </div>
+        <p className={styles.inputHint}>Press <strong>Enter</strong> to split into two lines.</p>
       </div>
 
       {/* Step 2 */}
@@ -164,7 +164,7 @@ export default function FormPanel({ state, setSiteName, setPlaylistId, setBg }: 
           aria-label="Download your generated web app as a ZIP"
           onClick={handleDownload}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <Download size={20} aria-hidden="true" />
           <span className={styles.btnLabel}>Download ZIP</span>
           <span className={styles.btnSub}>Your app, ready to run locally</span>
         </button>

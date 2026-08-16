@@ -22,7 +22,7 @@ export default function ImageLibrary({ bg, setBg }: Props) {
 
   function handleFile(file: File) {
     if (!file.type.startsWith('image/')) return;
-    if (file.size > 10 * 1024 * 1024) { alert('Image too large — max 10 MB.'); return; }
+    if (file.size > 15 * 1024 * 1024) { alert('Image too large — max 15 MB.'); return; }
     const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg';
     const reader = new FileReader();
     reader.onload = e => {
@@ -62,7 +62,7 @@ export default function ImageLibrary({ bg, setBg }: Props) {
             <div className={styles.emptyState}>
               <span className={styles.emptyIcon}>🖼</span>
               <p>Library images will appear here.</p>
-              <p className={styles.emptySub}>Drop images into <code>public/images/</code> and add their names to <code>LIBRARY_IMAGES</code>.</p>
+              <p className={styles.emptySub}>Drop images or GIFs into <code>public/images/</code> and add their names to <code>LIBRARY_IMAGES</code>.</p>
             </div>
           ) : (
             LIBRARY_IMAGES.map(filename => (
@@ -93,10 +93,10 @@ export default function ImageLibrary({ bg, setBg }: Props) {
               onDrop={e => { e.preventDefault(); dropZoneRef.current?.classList.remove(styles.dragOver); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={styles.uploadIcon}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span className={styles.dropPrimary}>Drop an image here</span>
+              <span className={styles.dropPrimary}>Drop an image or GIF here</span>
               <span className={styles.dropSecondary}>or <span className={styles.dropLink}>browse files</span></span>
-              <span className={styles.dropHint}>JPG, PNG, WebP — max 10 MB</span>
-              <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={e => { if (e.target.files?.[0]) handleFile(e.target.files[0]); }} />
+              <span className={styles.dropHint}>JPG, PNG, WebP, GIF — max 15 MB</span>
+              <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden onChange={e => { if (e.target.files?.[0]) handleFile(e.target.files[0]); }} />
             </label>
           ) : (
             <div className={styles.uploadPreview}>
